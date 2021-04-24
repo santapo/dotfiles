@@ -1,9 +1,8 @@
 -- author santapo
 --
-
 local lgi = require('lgi')
 local UP = lgi.require('UPowerGlib')
-local naughty = require('naughty')
+-- local naughty = require('naughty')
 
 local battery = {
    signal = {
@@ -51,11 +50,11 @@ battery.display_device.on_notify = function(device)
       or device.warning_level == UP.DeviceLevel.ACTION
       or device.warning_level == UP.DeviceLevel.LAST
    then
-      naughty.notify({
-	 title = api.battery.notification.critical_title or "Warning",
-	 text = battery.notification.critical_text or "Please connect your charger",
-	 preset  = battery.notification.critical_preset or naughty.config.presets.critical
-      })
+      -- naughty.notify({
+    	--  title = api.battery.notification.critical_title or "Warning",
+    	--  text = battery.notification.critical_text or "Please connect your charger",
+    	--  preset  = battery.notification.critical_preset or naughty.config.presets.critical
+      -- })
    end
 end
 

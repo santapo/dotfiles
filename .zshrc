@@ -104,6 +104,9 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"\
 
+alias icloud="/opt/icloud/icloud"
+
+
 if [ -f $HOME/.profile ]; then . ~/.profile; fi
 
 # >>> conda initialize >>>
