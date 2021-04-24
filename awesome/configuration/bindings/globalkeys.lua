@@ -5,6 +5,7 @@ local awful = require("awful")
 local hotkeys_popup = require("awful.hotkeys_popup")
 -- Menubar library
 local menubar = require("menubar")
+local xrandr = require("module.xrandr")
 
 -- Resource Configuration
 local modkey = RC.vars.modkey
@@ -68,6 +69,23 @@ function _M.get()
         {description = "go back", group = "client"}),
 
     --   -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+
+    -- Volume Keys
+    awful.key({}, "XF86AudioLowerVolume", function ()
+        awful.util.spawn("amixer -q -D pulse sset Master 5%-", false) end),
+    awful.key({}, "XF86AudioRaiseVolume", function ()
+            awful.util.spawn("amixer -q -D pulse sset Master 5%+", false) end),
+    awful.key({}, "XF86AudioMute", function ()
+            awful.util.spawn("amixer -D pulse set Master 1+ toggle", false) end),
+
+    -- Media Keys
+    awful.key({}, "XF86AudioPlay", function()
+            awful.util.spawn("playerctl play-pause", false) end),
+    awful.key({}, "XF86AudioNext", function()
+            awful.util.spawn("playerctl next", false) end),
+    awful.key({}, "XF86AudioPrev", function()
+            awful.util.spawn("playerctl previous", false) end),
+
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
@@ -150,6 +168,9 @@ function _M.get()
     -- Menubar
     awful.key({ modkey }, "p", function() menubar.show() end,
               {description = "show the menubar", group = "launcher"})
+
+    -- Xrandr
+    awful.key({ modkey, "Shift"   }, "p", function() xrandr.xrandr() end)
 
   )
 
