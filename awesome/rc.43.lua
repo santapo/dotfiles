@@ -9,7 +9,10 @@ require("awful.autofocus")
 
 local beautiful = require("beautiful")
 local menubar = require("menubar")
+local naughty = require("naughty")
+local hotkeys_popup = require("awful.hotkeys_popup")
 
+require("awful.hotkeys_popup.keys")
 
 
 RC = {} -- global namespace, on top before require any modules
@@ -99,5 +102,5 @@ awful.rules.rules = main.rules(
 -- }}}
 
 -- {{{ Signals
-require("main.signals")
+require("configuration.main.signals")
 -- }}}

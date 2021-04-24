@@ -18,7 +18,7 @@ local terminal = RC.vars.terminal
 
 -- Variable definitions
 -- This is used later as the default terminal and editor to run.
-local editor = os.getenv("EDITOR") or "nano"
+local editor = os.getenv("EDITOR") or "nvim"
 local editor_cmd = terminal .. " -e " .. editor
 
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --

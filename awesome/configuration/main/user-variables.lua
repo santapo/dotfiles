@@ -19,8 +19,7 @@ local _M = {
   -- user defined wallpaper
   wallpaper = "/home/santapo/Pictures/wallpaper.jpg",
   --wallpaper = home .. "/Pictures/your-wallpaper-here.jpg",
-  editor = os.getenv("EDITOR") or "nvim"
-  editor_cmd = terminal .. " -e " .. editor
-}
+  
+  }
 
 return _M
