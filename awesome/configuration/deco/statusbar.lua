@@ -7,9 +7,9 @@ local wibox = require("wibox")
 
 -- Custom Local Library: Common Functional Decoration
 local deco = {
-  wallpaper = require("deco.wallpaper"),
-  taglist   = require("deco.taglist"),
-  tasklist  = require("deco.tasklist")
+  wallpaper = require("configuration.deco.wallpaper"),
+  taglist   = require("configuration.deco.taglist"),
+  tasklist  = require("configuration.deco.tasklist")
 }
 
 local taglist_buttons  = deco.taglist()
