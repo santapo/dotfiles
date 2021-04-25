@@ -293,6 +293,17 @@ globalkeys = gears.table.join(
      	      awful.util.spawn("playerctl next", false) end),
     awful.key({}, "XF86AudioPrev", function()
      	      awful.util.spawn("playerctl previous", false) end),
+
+    -- Backlight
+    awful.key({}, "XF86MonBrightnessUp", function()
+              awful.util.spawn("light -A 20", false) end),
+    awful.key({}, "XF86MonBrightnessDown", function()
+              awful.util.spawn("light -U 20", false) end),
+
+    awful.key({"Shift"}, "XF86MonBrightnessUp", function()
+              awful.util.spawn("light -s sysfs/backlight/ddcci3 -A 20", false) end),
+    awful.key({"Shift"}, "XF86MonBrightnessDown", function()
+              awful.util.spawn("light -s sysfs/backlight/ddcci3 -U 20", false) end),
     
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
