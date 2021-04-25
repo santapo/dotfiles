@@ -72,20 +72,31 @@ function _M.get()
 
     -- Volume Keys
     awful.key({}, "XF86AudioLowerVolume", function ()
-        awful.util.spawn("amixer -q -D pulse sset Master 5%-", false) end),
+              awful.util.spawn("amixer -q -D pulse sset Master 5%-", false) end),
     awful.key({}, "XF86AudioRaiseVolume", function ()
-            awful.util.spawn("amixer -q -D pulse sset Master 5%+", false) end),
+              awful.util.spawn("amixer -q -D pulse sset Master 5%+", false) end),
     awful.key({}, "XF86AudioMute", function ()
-            awful.util.spawn("amixer -D pulse set Master 1+ toggle", false) end),
-
+     	      awful.util.spawn("amixer -D pulse set Master 1+ toggle", false) end),
+    
     -- Media Keys
     awful.key({}, "XF86AudioPlay", function()
-            awful.util.spawn("playerctl play-pause", false) end),
+     	      awful.util.spawn("playerctl play-pause", false) end),
     awful.key({}, "XF86AudioNext", function()
-            awful.util.spawn("playerctl next", false) end),
+     	      awful.util.spawn("playerctl next", false) end),
     awful.key({}, "XF86AudioPrev", function()
-            awful.util.spawn("playerctl previous", false) end),
+     	      awful.util.spawn("playerctl previous", false) end),
 
+    -- Backlight
+    awful.key({}, "XF86MonBrightnessUp", function()
+              awful.util.spawn("light -A 20", false) end),
+    awful.key({}, "XF86MonBrightnessDown", function()
+              awful.util.spawn("light -U 20", false) end),
+
+    awful.key({"Shift"}, "XF86MonBrightnessUp", function()
+              awful.util.spawn("light -s sysfs/backlight/ddcci3 -A 20", false) end),
+    awful.key({"Shift"}, "XF86MonBrightnessDown", function()
+              awful.util.spawn("light -s sysfs/backlight/ddcci3 -U 20", false) end),
+    
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
