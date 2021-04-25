@@ -5,15 +5,9 @@ pcall(require, "luarocks.loader")
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
-require("awful.autofocus")
 
 local beautiful = require("beautiful")
 local menubar = require("menubar")
-local naughty = require("naughty")
-local hotkeys_popup = require("awful.hotkeys_popup")
-
-require("awful.hotkeys_popup.keys")
-
 
 RC = {} -- global namespace, on top before require any modules
 RC.vars = require("configuration.main.user-variables")

@@ -56,19 +56,11 @@ function _M.get(clientkeys, clientbuttons)
           "ConfigManager",  -- Thunderbird's about:config.
           "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
         }
-      },
-      properties = { 
-        floating = true 
-      }
-    },
+      }, properties = { floating = true }},
 
     -- Add titlebars to normal clients and dialogs
-    { rule_any = {
-        type = { "normal", "dialog" }
-      }, 
-      properties = { 
-        titlebars_enabled = true
-      }
+    { rule_any = { type = { "normal", "dialog" }
+      }, properties = { titlebars_enabled = true }
     },
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
