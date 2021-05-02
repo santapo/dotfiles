@@ -6,6 +6,7 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- Menubar library
 local menubar = require("menubar")
 local xrandr = require("module.xrandr")
+local screenshot = require("module.screenshot")
 
 -- Resource Configuration
 local modkey = RC.vars.modkey
@@ -180,11 +181,19 @@ function _M.get()
     awful.key({ modkey }, "p", function() menubar.show() end,
               {description = "show the menubar", group = "launcher"}),
 
-    -- Xrandr
-    awful.key({ modkey, "Shift"   }, "p", function() xrandr.xrandr() end)
-
-  )
-
+    -- Xrandr control multi-monitor
+    awful.key({ modkey, "Shift"   }, "p", function() xrandr.xrandr() end),
+    
+    -- Screenshot with scrot
+    awful.key({ }, "Print", scrot_full,
+          {description = "Take a screenshot of entire screen", group = "screenshot"}),
+    awful.key({ modkey, }, "Print", scrot_selection,
+          {description = "Take a screenshot of selection", group = "screenshot"}),
+    awful.key({ "Shift" }, "Print", scrot_window,
+          {description = "Take a screenshot of focused window", group = "screenshot"}),
+    awful.key({ "Ctrl" }, "Print", scrot_delay,
+          {description = "Take a screenshot of delay", group = "screenshot"})  
+    )
   return globalkeys
 end
 
