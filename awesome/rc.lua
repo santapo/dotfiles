@@ -84,7 +84,8 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 
 
 -- {{{ Statusbar: Wibar
-require("configuration.deco.statusbar")
+-- require("configuration.deco.statusbar")
+require("configuration.deco")
 -- }}}
 
 -- {{{ Rules
@@ -98,3 +99,21 @@ awful.rules.rules = main.rules(
 -- {{{ Signals
 require("configuration.main.signals")
 -- }}}
+
+
+awful.screen.connect_for_each_screen(
+  function(s)
+    -- If wallpaper is a function, call it with the screen
+    if beautiful.wallpaper then
+        if type(beautiful.wallpaper) == "string" then
+            if beautiful.wallpaper:sub(1, #"#") == "#" then
+                gears.wallpaper.set(beautiful.wallpaper)
+            elseif beautiful.wallpaper:sub(1, #"/") == "/" then
+                gears.wallpaper.maximized(beautiful.wallpaper, s)
+            end
+        else
+            beautiful.wallpaper(s)
+        end
+    end
+  end
+)
