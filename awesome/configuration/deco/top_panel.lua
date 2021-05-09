@@ -17,27 +17,22 @@ local tasklist_buttons = deco.tasklist()
 
 mytextclock = wibox.widget.textclock()
 
-local top_panel = function(s, offset)
-
-    local offsetx = 0
-	if offset == true then
-		offsetx = dpi(45)
-	end
+local top_panel = function(s)
 
     local panel = wibox{
         ontop = true,
         screen = s,
         type = 'dock',
-        height = dpi(28),
-        width = s.geometry.width - offsetx,
-        x = s.geometry.x + offsetx,
+        height = dpi(25),
+        width = s.geometry.width,
+        x = s.geometry.x,
         y = s.geometry.y,
         stretch = false,
         -- bg = beautiful.background,
         -- fg = beautiful.fg_normal
     }
 
-    panel:struts{ top = dpi(28) }
+    panel:struts{ top = dpi(25) }
 
     panel:connect_signal('mouse::enter', function()
         local w = mouse.current_wibox

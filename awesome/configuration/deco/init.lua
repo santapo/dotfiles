@@ -9,10 +9,12 @@ awful.screen.connect_for_each_screen(
       -- Create the left_panel
       -- s.left_panel = left_panel(s)
       -- Create the Top bar
-      s.top_panel = top_panel(s, false)
+      s.top_panel = top_panel(s)
+      local fullscreen = s.selected_tag.fullscreenMode
+      s.top_panel.visible = not fullscreen
     else
       -- Create the Top bar
-      s.top_panel = top_panel(s, false)
+      s.top_panel = top_panel(s)
     end
   end
 )
@@ -49,22 +51,22 @@ function updateBarsVisibility()
   end
 end
 
-_G.tag.connect_signal(
+tag.connect_signal(
   'property::selected',
   function(t)
     updateBarsVisibility()
   end
 )
 
-_G.client.connect_signal(
+client.connect_signal(
   'property::fullscreen',
-  function(c)
+  function(c)  
     c.first_tag.fullscreenMode = c.fullscreen
     updateBarsVisibility()
   end
 )
 
-_G.client.connect_signal(
+client.connect_signal(
   'unmanage',
   function(c)
     if c.fullscreen then
