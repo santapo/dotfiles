@@ -32,7 +32,7 @@ local top_panel = function(s)
         -- fg = beautiful.fg_normal
     }
 
-    panel:struts{ top = dpi(25) }
+    panel:struts{ top = dpi(30) }
 
     panel:connect_signal('mouse::enter', function()
         local w = mouse.current_wibox
@@ -42,7 +42,7 @@ local top_panel = function(s)
     end)
 
     s.systray = wibox.widget{
-        visible = false,
+        visible = true,
         base_size = dpi(20),
         horizontal = true,
         screen = 'primary',
@@ -72,7 +72,7 @@ local top_panel = function(s)
         filter  = awful.widget.tasklist.filter.currenttags,
         buttons = tasklist_buttons
     }
-
+    s.mypromptbox = awful.widget.prompt()
     s.battery     			= require('widget.battery')()
     panel:setup {
         layout = wibox.layout.align.horizontal,
@@ -85,8 +85,13 @@ local top_panel = function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            mykeyboardlayout,
-            wibox.widget.systray(),
+            -- mykeyboardlayout,
+            {
+                s.systray,
+                margin = dpi(5),
+                widget = wibox.container.margin
+            },
+            -- wibox.widget.systray(),
             mytextclock,
             s.battery,
             s.mylayoutbox,

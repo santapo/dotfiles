@@ -10,12 +10,12 @@ awful.screen.connect_for_each_screen(
       -- s.left_panel = left_panel(s)
       -- Create the Top bar
       s.top_panel = top_panel(s)
-      local fullscreen = s.selected_tag.fullscreenMode
-      s.top_panel.visible = not fullscreen
     else
       -- Create the Top bar
       s.top_panel = top_panel(s)
     end
+    local fullscreen = s.selected_tag.fullscreenMode
+    s.top_panel.visible = not fullscreens
   end
 )
 

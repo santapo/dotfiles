@@ -47,7 +47,7 @@ local return_button = function()
 	local battery_button = wibox.widget {
 		{
 			battery_widget,
-			margins = dpi(7),
+			margins = dpi(2),
 			widget = wibox.container.margin
 		},
 		widget = clickable_container
@@ -128,13 +128,13 @@ local return_button = function()
 				end
 				
 				battery_widget.spacing = dpi(5)
-				battery_percentage_text.visible = true
+				battery_percentage_text.visible = false
 				battery_percentage_text:set_text(battery_percentage .. '%')
 
 				local icon_name = 'battery'
 
 				-- Fully charged
-				if (status == 'fully-charged' or status == 'charging') and battery_percentage == 100 then
+				if (status == 'fully-charged' or status == 'charging') then
 					icon_name = icon_name .. '-' .. 'fully-charged'
 					battery_imagebox.icon:set_image(gears.surface.load_uncached(widget_icon_dir .. icon_name .. '.svg'))
 					return
