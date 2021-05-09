@@ -17,8 +17,8 @@ require("configuration.main.error-handling")
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
-beautiful.wallpaper = RC.vars.wallpaper
+beautiful.init(gears.filesystem.get_configuration_dir() .. "themes/xresources/theme.lua")
+beautiful.get().wallpaper = RC.vars.wallpaper
 -- }}}
 
 modkey = RC.vars.modkey

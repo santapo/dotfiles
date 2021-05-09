@@ -41,13 +41,7 @@ local top_panel = function(s)
         end
     end)
 
-    s.systray = wibox.widget{
-        visible = true,
-        base_size = dpi(20),
-        horizontal = true,
-        screen = 'primary',
-        widget = wibox.widget.systray,
-    }
+
 
     -- set_wallpaper(s)
 
@@ -73,7 +67,10 @@ local top_panel = function(s)
         buttons = tasklist_buttons
     }
     s.mypromptbox = awful.widget.prompt()
-    s.battery     			= require('widget.battery')()
+    s.battery = require('widget.battery')()
+    s.network = require('widget.network')()
+
+
     panel:setup {
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
@@ -85,15 +82,11 @@ local top_panel = function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            -- mykeyboardlayout,
-            {
-                s.systray,
-                margin = dpi(5),
-                widget = wibox.container.margin
-            },
-            -- wibox.widget.systray(),
-            mytextclock,
+            mykeyboardlayout,
+            wibox.widget.systray(),
             s.battery,
+            s.network,
+            mytextclock,
             s.mylayoutbox,
         },
     }
