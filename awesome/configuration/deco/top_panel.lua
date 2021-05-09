@@ -73,13 +73,14 @@ local top_panel = function(s)
         buttons = tasklist_buttons
     }
 
+    s.battery     			= require('widget.battery')()
     panel:setup {
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
-            -- RC.launcher,
+            RC.launcher,
             s.mytaglist,
-            -- s.mypromptbox,
+            s.mypromptbox,
         },
         s.mytasklist, -- Middle widget
         { -- Right widgets
@@ -87,6 +88,7 @@ local top_panel = function(s)
             mykeyboardlayout,
             wibox.widget.systray(),
             mytextclock,
+            s.battery,
             s.mylayoutbox,
         },
     }
