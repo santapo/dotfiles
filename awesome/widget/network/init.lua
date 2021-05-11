@@ -73,7 +73,7 @@ local return_button = function()
 	local network_tooltip = awful.tooltip {
 		text = 'Loading...',
 		objects = {widget_button},
-		mode = 'outside',
+		mode = 'mouse',
 		align = 'right',
 		preferred_positions = {'left', 'right', 'top', 'bottom'},
 		margin_leftright = dpi(8),
@@ -115,11 +115,14 @@ local return_button = function()
 	end
 
 	local network_notify = function(message, title, app_name, icon)
-		naughty.notification({ 
-			message = message,
+		naughty.notify({ 
+			text = message,
 			title = title,
-			app_name = app_name,
-			icon = icon
+			-- app_name = app_name,
+			icon = icon,
+			icon_size = 25,
+			-- width = dpi(300),
+			-- height = dpi(100),
 		})
 	end
 
@@ -145,6 +148,7 @@ local return_button = function()
 				]],
 				function(stdout)
 					local essid = stdout:match('SSID: (.-)\n') or 'N/A'
+					-- naughty.notify({text = tostring(essid)})
 					local bitrate = stdout:match('tx bitrate: (.+/s)') or 'N/A'
 					local message = 'Connected to: <b>' .. (essid or 'Loading...*') ..
 						'</b>\nWireless Interface: <b>' .. interfaces.wlan_interface ..

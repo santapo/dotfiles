@@ -17,9 +17,25 @@ local tasklist_buttons = deco.tasklist()
 
 mytextclock = wibox.widget.textclock()
 
-local top_panel = function(s)
+-- local function set_wallpaper(s)
+--     -- Wallpaper
+--     if beautiful.wallpaper then
+--         local wallpaper = beautiful.wallpaper
+--         -- If wallpaper is a function, call it with the screen
+--         if type(wallpaper) == "function" then
+--             wallpaper = wallpaper(s)
+--         end
+--         gears.wallpaper.maximized(wallpaper, s, true)
+--     end
+--   end
+  
+--   -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
+-- screen.connect_signal("property::geometry", set_wallpaper)
 
-    local panel = wibox{
+local top_panel = function(s)
+    -- set_wallpaper(s)
+
+    local panel = awful.wibar{
         ontop = true,
         screen = s,
         type = 'dock',
@@ -28,6 +44,7 @@ local top_panel = function(s)
         x = s.geometry.x,
         y = s.geometry.y,
         stretch = false,
+        visible = true,
         -- bg = beautiful.background,
         -- fg = beautiful.fg_normal
     }

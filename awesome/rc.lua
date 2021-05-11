@@ -5,9 +5,12 @@ pcall(require, "luarocks.loader")
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
+require("awful.autofocus")
 
 local beautiful = require("beautiful")
 local menubar = require("menubar")
+
+local naughty = require("naughty")
 
 RC = {} -- global namespace, on top before require any modules
 RC.vars = require("configuration.main.user-variables")
@@ -58,11 +61,17 @@ RC.tags = main.tags()
 -- Create a laucher widget and a main menu
 RC.mainmenu = awful.menu({ items = main.menu() }) -- in globalkeys
 
--- a variable needed in statusbar (helper)
+
+
+-- -- a variable needed in statusbar (helper)
 RC.launcher = awful.widget.launcher(
   { image = beautiful.awesome_icon, menu = RC.mainmenu }
 )
 
+-- launcher = awful.widget.launcher({ image = beautiful.awesome_icon,
+--                                      menu = RC.mainmenu })
+
+-- naughty.notify({icon = launcher.image})
 -- Menubar configuration
 -- Set the terminal for applications that require it
 menubar.utils.terminal = RC.vars.terminal
@@ -82,7 +91,7 @@ root.keys(RC.globalkeys)
 mykeyboardlayout = awful.widget.keyboardlayout()
 
 
-
+-- awful.spawn.once("xrandr --output eDP1 --mode 1920x1080 --output HDMI1 --mode 1920x1080 --primary --pos 0x0 --rotate normal")
 -- {{{ Statusbar: Wibar
 -- require("configuration.deco.statusbar")
 require("configuration.deco")
