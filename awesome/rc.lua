@@ -361,7 +361,13 @@ globalkeys = gears.table.join(
               {description = "show the menubar", group = "launcher"}),
 
     -- Xrandr
-    awful.key({ modkey, "Shift"   }, "p", function() xrandr.xrandr() end)
+    awful.key({ modkey, "Shift"   }, "p", function() xrandr.xrandr() end),
+    
+    -- Screen Capture
+    awful.key({}, "Print", function()
+      awful.util.spawn_with_shell('maim -s | xclip -selection clipboard -t image/png')
+    end
+  )
 )
 
 clientkeys = gears.table.join(
