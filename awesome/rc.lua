@@ -1,31 +1,14 @@
--- If LuaRocks is installed, make sure that packages installed through it are
--- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
-
--- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
--- Widget and layout library
 local wibox = require("wibox")
--- Theme handling library
 local beautiful = require("beautiful")
--- Notification library
-local naughty = require("naughty")
-local menubar = require("menubar")
-local hotkeys_popup = require("awful.hotkeys_popup")
-
-require('module.notifications')
-
--- {{{ Variable definitions
--- Themes define colours, icons, font and wallpapers.
 beautiful.init(gears.filesystem.get_configuration_dir() .. "themes/xresources/theme.lua")
 beautiful.get().wallpaper = "/home/santapo/Pictures/wallpaper.jpg"
 
--- This is used later as the default terminal and editor to run.
-terminal = "urxvt"
-editor = os.getenv("EDITOR") or "nvim"
-editor_cmd = terminal .. " -e " .. editor
+require('module.notifications')
+require('module.auto-start')
 
 require('layout')
 require('configuration.client')
@@ -110,4 +93,3 @@ _G.client.connect_signal("focus", function(c) c.border_color = beautiful.border_
 _G.client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 --
-awful.spawn.with_shell("ibus-daemon -drx")

@@ -8,7 +8,8 @@ local TagList = require('widgets.tag-list')
 local TaskList = require('widgets.task-list')
 
 terminal = "urxvt"
-mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
+
+mymainmenu = awful.menu({ items = {
                                     { "open terminal", terminal }
                                   }
                         })
