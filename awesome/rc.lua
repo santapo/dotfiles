@@ -4,8 +4,11 @@ local awful = require("awful")
 require("awful.autofocus")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
-beautiful.init(gears.filesystem.get_configuration_dir() .. "themes/xresources/theme.lua")
+beautiful.init(gears.filesystem.get_configuration_dir() .. "themes/light/theme.lua")
 beautiful.get().wallpaper = "/home/santapo/Pictures/wallpaper.jpg"
+
+local naughty = require("naughty")
+naughty.config.defaults['icon_size'] = 100
 
 require('module.notifications')
 require('module.auto-start')
@@ -35,13 +38,14 @@ _G.client.connect_signal("manage", function (c)
     -- Set the windows at the slave,
     -- i.e. put it at the end of others instead of setting it master.
     -- if not awesome.startup then awful.client.setslave(c) end
-
     if _G.awesome.startup
       and not c.size_hints.user_position
       and not c.size_hints.program_position then
         -- Prevent clients from being unreachable after screen count changes.
         awful.placement.no_offscreen(c)
     end
+    c.shape = gears.shape.rounded_rect
+    awful.titlebar.hide(c)
 end)
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.

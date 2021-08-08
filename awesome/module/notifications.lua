@@ -38,12 +38,3 @@ do
       in_error = false
   end)
 end
-
-function log_this(title, txt)
-  naughty.notify(
-    {
-      title = 'log: ' .. title,
-      text = txt
-    }
-  )
-end
