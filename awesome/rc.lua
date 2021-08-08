@@ -4,7 +4,7 @@ local awful = require("awful")
 require("awful.autofocus")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
-beautiful.init(gears.filesystem.get_configuration_dir() .. "themes/light/theme.lua")
+beautiful.init(gears.filesystem.get_configuration_dir() .. "themes/xresources/theme.lua")
 beautiful.get().wallpaper = "/home/santapo/Pictures/wallpaper.jpg"
 
 local naughty = require("naughty")

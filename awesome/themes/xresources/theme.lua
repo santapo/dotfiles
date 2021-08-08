@@ -14,15 +14,15 @@ local themes_path = gfs.get_themes_dir()
 local theme = dofile(themes_path.."default/theme.lua")
 -- load vector assets' generators for this theme
 
-theme.font          = "sans 11"
+theme.font          = "Montserrat Medium 10"
 
-theme.bg_normal     = xrdb.background
+theme.bg_normal     = "f0ffffff"
 theme.bg_focus      = xrdb.color12
 theme.bg_urgent     = xrdb.color9
 theme.bg_minimize   = xrdb.color8
 theme.bg_systray    = theme.bg_normal
 
-theme.fg_normal     = xrdb.foreground
+theme.fg_normal     = "#3c3836"
 theme.fg_focus      = theme.bg_normal
 theme.fg_urgent     = theme.bg_normal
 theme.fg_minimize   = theme.bg_normal
@@ -131,4 +131,3 @@ end
 
 return theme
 
--- vim: filetype=lua:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:textwidth=80
