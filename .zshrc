@@ -107,9 +107,8 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"\
 
 if [ -f $HOME/.profile ]; then . ~/.profile; fi
-
-export GOPATH=$HOME/go
-export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/bin:$HOME/.local/bin:$GOPATH/bin
+export GTK_THEME=WhiteSur:light
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/bin:$HOME/.local/bin
 export EDITOR=nvim
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 export PYTHONPATH=.
