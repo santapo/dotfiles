@@ -35,7 +35,7 @@
 *.color7:       #dfe5ec
 *.color15:      #ffffff
 
-URxvt.font: xft:Source Code Pro:size=10.5:weight=bold
+URxvt.font: xft:Source Code Pro:size=11:weight=bold,xft:DejaVu Sans Mono for Powerline:size=12:weight=bold
 URxvt.depth:                      24
 URxvt*scrollBar:                  false
 URxvt*mouseWheelScrollPage:       true
@@ -58,4 +58,3 @@ URxvt.keysym.Control-Up:          \033[1;5A
 URxvt.keysym.Shift-Control-Up:    \033[1;6A
 URxvt.keysym.Control-Down:        \033[1;5B
 URxvt.keysym.Shift-Control-Down:  \033[1;6B
-
