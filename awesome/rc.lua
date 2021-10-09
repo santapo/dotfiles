@@ -6,6 +6,7 @@ local ruled = require('ruled');
 local naughty = require('naughty');
 local config = require('helpers.config');
 local beautiful = require('beautiful');
+require('awful.autofocus');
 require('./errors')();
 
 
@@ -45,9 +46,12 @@ awful.keyboard.append_global_keybindings({
 
         awful.key({ modkey }, "space", function() awful.layout.inc(1) end),
 
+        awful.key({ modkey, "Shift" }, "q", function() awesome.quit() end),
+        awful.key({ modkey, "Shift" }, "r", function() awesome.restart() end),
+
         -- Resize
 	awful.key({ modkey }, "]", function() awful.tag.incmwfact(0.05) end),
-	awful.key({ modkey }, "[", function() awful.tag.incmwfact(-0.05) end), 
+	awful.key({ modkey }, "[", function() awful.tag.incmwfact(-0.05) end),
 	awful.key({ modkey, "Shift" }, "]", function() awful.tag.incmwfact(0.01) end),
 	awful.key({ modkey, "Shift" }, "[", function() awful.tag.incmwfact(-0.01) end)
 });
@@ -62,7 +66,7 @@ for i = 0, 9 do
 			local tag = root.tags()[i];
 			if tag then tag:view_only() end;
 		end),
-		awful.key({ modkey, 'Control' }, spot, function()
+		awful.key({ modkey, "Shift" }, spot, function()
 			local tag = root.tags()[i];
 			if tag and client.focus then client.focus:move_to_tag(tag) end;
 		end)
@@ -90,10 +94,10 @@ client.connect_signal("request::default_mousebindings", function()
 		-- end),
 		awful.button({ modkey }, 1, function(c)
 			c.floating = true;
-			c:active { context = 'mouse_click', action = "mouse_move" }
+			c:activate { context = 'mouse_click', action = "mouse_move" }
 		end),
 		awful.button({ modkey }, 3, function(c)
-			c:active { context = 'mouse_click', action = "mouse_resize" }
+			c:activate { context = 'mouse_click', action = "mouse_resize" }
 		end),
 	});
 	
@@ -132,8 +136,27 @@ awful.spawn.with_shell("$HOME/.config/awesome/scripts/wallpaper.sh");
 if not root.elements.topbar then require('elements.topbar')() end;
 if not root.elements.tagswitcher then require('elements.tagswitch')() end;
 
+-- SIGNALS
+client.connect_signal("manage", function (c)
+        -- Set the windows at the slave,
+        -- i.e. put it at the end of others instead of setting it master.
+        -- if not awesome.startup then awful.client.setslave(c) end
+        if awesome.startup
+          and not c.size_hints.user_position
+          and not c.size_hints.program_position then
+            -- Prevent clients from being unreachable after screen count changes.
+            awful.placement.no_offscreen(c)
+        end
+        c.shape = gears.shape.rounded_rect
+        awful.titlebar.hide(c)
+end)
+client.connect_signal("mouse::enter", function(c)
+        c:emit_signal("request::activate", "mouse_enter", {raise = false})
+end);
+
 os.execute('sleep 0.1');
 if root.elements.topbar then root.elements.topbar.show() end;
+
 
 
 
