@@ -9,7 +9,9 @@ local config = require('helpers.config');
 
 function toggle_tag_switcher()
     awful.screen.connect_for_each_screen(function(screen)
-        screen.tagswitch.visible = not screen.tagswitch.visible;
+        if screen == awful.screen.focused() then
+            screen.tagswitch.visible = not screen.tagswitch.visible;
+        end
     end);
 end
 
