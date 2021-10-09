@@ -130,7 +130,7 @@ end);
 -- SPAWNS
 awful.spawn.with_shell("$HOME/.config/awesome/scripts/screen.sh");
 awful.spawn.with_shell("$HOME/.config/awesome/scripts/wallpaper.sh");
--- awful.spawn.with_shell("$HOME/.config/awesome/scripts/compositor.sh");
+awful.spawn.with_shell("$HOME/.config/awesome/scripts/compositor.sh");
 
 -- ELEMENTS
 if not root.elements.topbar then require('elements.topbar')() end;
