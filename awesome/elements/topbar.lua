@@ -275,7 +275,9 @@ return function()
         if not root.elements.taglist or not root.elements.taglist[screen.index] then make_taglist(screen) end;
         if not root.elements.date or not root.elements.date[screen.index] then make_date(screen) end;
         if not root.elements.power or not root.elements.power[screen.index] then make_power(screen) end;
-        if not root.elements.utilities or not root.elements.utilities[screen.index] then make_utilities(screen) end;
+        if screen.index == 1 then
+            if not root.elements.utilities or not root.elements.utilities[screen.index] then make_utilities(screen) end;
+        end;
     end);
 
     root.elements.topbar = {
