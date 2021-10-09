@@ -17,7 +17,7 @@ function make_launcher(s)
         width = config.topbar.w,
         height = config.topbar.h,
     });
-    
+
     launcher:setup {
         layout = wibox.container.margin,
         forced_width = config.topbar.w,
@@ -36,7 +36,7 @@ function make_launcher(s)
             }
         }
     }
-    
+  
     launcher:struts({ top = config.topbar.h + config.global.m });
     launcher.x = s.workarea.x + config.global.m;
     launcher.y = config.global.m;
@@ -46,9 +46,10 @@ function make_launcher(s)
         end)
     ));
 
-    root.elements.laucnher = root.elements.launcher or {};
+    root.elements.launcher = root.elements.launcher or {};
     root.elements.launcher[s.index] = launcher;
 end
+
 
 
 return function()

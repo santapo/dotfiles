@@ -43,6 +43,7 @@ awful.keyboard.append_global_keybindings({
         awful.key({ modkey }, "Return", function() awful.spawn(config.commands.terminal) end),
 });
 
+-- TAG KEYBINDS
 for i = 0, 9 do
         local spot = i;
         if(spot == 10) then spot = 0 end
@@ -60,10 +61,10 @@ for i = 0, 9 do
 end
 
 -- CLIENT KEYBINDS/BUTTONS
-client.connect_signal("request::default_keybindings", function(c)
-        awful.keyboard.append_global_keybindings({
-                awful.key({ modkey }, "q", function(c) c.kill(c) end),
-        }); 
+client.connect_signal("request::default_keybindings", function()
+        awful.keyboard.append_client_keybindings({
+                awful.key({ modkey }, "q", function(c) c:kill() end),
+        });
 end);
 
 client.connect_signal("request::default_mousebindings", function(c)
@@ -81,6 +82,30 @@ client.connect_signal("request::default_mousebindings", function(c)
 		end),
 	});
 	
+end);
+
+-- RULES
+ruled.client.connect_signal("request::rules", function()
+        ruled.client.append_rule {
+                id = 'global',
+                rule = { },
+                properties = {
+                        raise = true,
+                        switch_to_tags = true,
+                        size_hints_honor = false,
+                        screen = awful.screen.preferred,
+                        focus = awful.client.focus.filter,
+                        placement = awful.placement.no_overlap+awful.placement.no_offscreen,
+                }
+        }
+end);
+
+-- NOTIFICATIONS
+ruled.notification.connect_signal("request::rules", function()
+        ruled.notification.append_rule {
+                rule = {},
+                properties = { timeout = 0 }
+        }
 end);
 
 -- SPAWNS
