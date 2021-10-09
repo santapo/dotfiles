@@ -6,7 +6,7 @@ local ruled = require('ruled');
 local naughty = require('naughty');
 local config = require('helpers.config');
 local beautiful = require('beautiful');
-
+require('./errors')();
 
 
 
@@ -20,7 +20,7 @@ beautiful.useless_gap = 5;
 modkey = 'Mod4';
 
 -- LAYOUTS
-tag.connect_signal('request::deafult_layouts', function()
+tag.connect_signal('request::default_layouts', function()
         awful.layout.append_default_layouts({
             awful.layout.suit.tile,
             awful.layout.suit.spiral.dwindle,
@@ -61,11 +61,17 @@ end
 
 -- CLIENT KEYBINDS/BUTTONS
 client.connect_signal("request::default_keybindings", function(c)
+        awful.keyboard.append_global_keybindings({
+                awful.key({ modkey }, "q", function(c) c.kill(c) end),
+        }); 
+end);
+
+client.connect_signal("request::default_mousebindings", function(c)
 	awful.mouse.append_client_mousebindings({
-		awful.button({}, 1, function(c)
-			if root.elements.hub then root.elements.hub.close() end
-			c:active { context = 'mouse_click', raise = true }
-		end),
+		-- awful.button({}, 1, function(c)
+		-- 	if root.elements.hub then root.elements.hub.close() end
+		-- 	c:active { context = 'mouse_click', raise = true }
+		-- end),
 		awful.button({ modkey }, 1, function(c)
 			c.floating = true;
 			c:active { context = 'mouse_click', action = "mouse_move" }
@@ -77,7 +83,16 @@ client.connect_signal("request::default_keybindings", function(c)
 	
 end);
 
+-- SPAWNS
+awful.spawn.with_shell("$HOME/.config/awesome/scripts/screen.sh");
+awful.spawn.with_shell("$HOME/.config/awesome/scripts/wallpaper.sh");
+-- awful.spawn.with_shell("$HOME/.config/awesome/scripts/compositor.sh");
+
+-- ELEMENTS
 if not root.elements.topbar then require('elements.topbar')() end;
+
+os.execute('sleep 0.1');
+if root.elements.topbar then root.elements.topbar.show() end;
 
 
 
