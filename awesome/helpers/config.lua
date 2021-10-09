@@ -8,12 +8,17 @@ local config = {
 
     },
     fonts = {
-        im = "Material Design Icons Desktop 14"
+        im = "Material Design Icons Desktop 14",
+        tll = "SF Pro Display Light 12",
+        tlb = "SF Pro Display Semibold 12",
     },
     icons = {
         arch = '󰣇',
+        date = '󰸘',
+        time = '󰅐',
     },
     colors = {
+        t = '#00000000',
         w = '#fefefe',
         x4 = xrdb.color4,
     },
