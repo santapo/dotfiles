@@ -1,99 +1,142 @@
-pcall(require, "luarocks.loader")
-local gears = require("gears")
-local awful = require("awful")
-require("awful.autofocus")
-local wibox = require("wibox")
-local beautiful = require("beautiful")
-beautiful.init(gears.filesystem.get_configuration_dir() .. "themes/xresources/theme.lua")
-beautiful.get().wallpaper = "/home/santapo/Pictures/wallpaper.jpg"
+local os = require('os');
+local gears = require('gears');
+local awful = require('awful');
+local wibox = require('wibox');
+local ruled = require('ruled');
+local naughty = require('naughty');
+local config = require('helpers.config');
+local beautiful = require('beautiful');
+require('./errors')();
 
-local naughty = require("naughty")
-naughty.config.defaults['icon_size'] = 100
 
-require('module.notifications')
-require('module.auto-start')
 
-require('layout')
-require('configuration.client')
-require('configuration.tags')
-_G.root.keys(require('configuration.keys.global'))
+-- ELEMENT STORE
+root.elements = root.elements or {};
 
-awful.screen.connect_for_each_screen(
-  function(s)
-    -- If wallpaper is a function, call it with the screen
-    if beautiful.wallpaper then
-        local wallpaper = beautiful.wallpaper
-        -- If wallpaper is a function, call it with the screen
-        if type(wallpaper) == "function" then
-            wallpaper = wallpaper(s)
+-- THEME
+beautiful.useless_gap = 5;
+
+-- MODKEY
+modkey = 'Mod4';
+
+-- LAYOUTS
+tag.connect_signal('request::default_layouts', function()
+        awful.layout.append_default_layouts({
+            awful.layout.suit.tile,
+            awful.layout.suit.spiral.dwindle,
+            awful.layout.suit.floating
+        });
+end);
+
+-- TAGS/LAYOUTS
+screen.connect_signal('request::desktop_decoration', function(s)
+        if s.index == 1 then
+            awful.tag({1,2,3}, s, awful.layout.layouts[1]);
+        else
+            awful.tag({4,5,6}, s, awful.layout.layouts[1]);
         end
-        gears.wallpaper.maximized(wallpaper, s, true)
-    end
-  end
-)
+        s.tags[1]:view_only();
+end);
 
--- {{{ Signals
--- Signal function to execute when a new client appears.
-_G.client.connect_signal("manage", function (c)
-    -- Set the windows at the slave,
-    -- i.e. put it at the end of others instead of setting it master.
-    -- if not awesome.startup then awful.client.setslave(c) end
-    if _G.awesome.startup
-      and not c.size_hints.user_position
-      and not c.size_hints.program_position then
-        -- Prevent clients from being unreachable after screen count changes.
-        awful.placement.no_offscreen(c)
-    end
-    c.shape = gears.shape.rounded_rect
-    awful.titlebar.hide(c)
-end)
+-- GLOBAL KEYBINDS/BUTTONS
+awful.keyboard.append_global_keybindings({
+        awful.key({ modkey }, "Return", function() awful.spawn(config.commands.terminal) end),
+        awful.key({ modkey }, "r", function() awful.spawn(config.commands.rofi) end),
 
--- Add a titlebar if titlebars_enabled is set to true in the rules.
-_G.client.connect_signal("request::titlebars", function(c)
-    -- buttons for the titlebar
-    local buttons = gears.table.join(
-        awful.button({ }, 1, function()
-            c:emit_signal("request::activate", "titlebar", {raise = true})
-            awful.mouse.client.move(c)
-        end),
-        awful.button({ }, 3, function()
-            c:emit_signal("request::activate", "titlebar", {raise = true})
-            awful.mouse.client.resize(c)
-        end)
-    )
+        awful.key({ modkey }, "space", function() awful.layout.inc(1) end),
 
-    awful.titlebar(c) : setup {
-        { -- Left
-            awful.titlebar.widget.iconwidget(c),
-            buttons = buttons,
-            layout  = wibox.layout.fixed.horizontal
-        },
-        { -- Middle
-            { -- Title
-                align  = "center",
-                widget = awful.titlebar.widget.titlewidget(c)
-            },
-            buttons = buttons,
-            layout  = wibox.layout.flex.horizontal
-        },
-        { -- Right
-            awful.titlebar.widget.floatingbutton (c),
-            awful.titlebar.widget.maximizedbutton(c),
-            awful.titlebar.widget.stickybutton   (c),
-            awful.titlebar.widget.ontopbutton    (c),
-            awful.titlebar.widget.closebutton    (c),
-            layout = wibox.layout.fixed.horizontal()
-        },
-        layout = wibox.layout.align.horizontal
-    }
-end)
+        -- Resize
+	awful.key({ modkey }, "]", function() awful.tag.incmwfact(0.05) end),
+	awful.key({ modkey }, "[", function() awful.tag.incmwfact(-0.05) end), 
+	awful.key({ modkey, "Shift" }, "]", function() awful.tag.incmwfact(0.01) end),
+	awful.key({ modkey, "Shift" }, "[", function() awful.tag.incmwfact(-0.01) end)
+});
 
--- Enable sloppy focus, so that focus follows mouse.
-_G.client.connect_signal("mouse::enter", function(c)
-    c:emit_signal("request::activate", "mouse_enter", {raise = false})
-end)
+-- TAG KEYBINDS
+for i = 0, 9 do
+        local spot = i;
+        if(spot == 10) then spot = 0 end
 
-_G.client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
-_G.client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
--- }}}
---
+	awful.keyboard.append_global_keybindings({
+		awful.key({ modkey }, spot, function()
+			local tag = root.tags()[i];
+			if tag then tag:view_only() end;
+		end),
+		awful.key({ modkey, 'Control' }, spot, function()
+			local tag = root.tags()[i];
+			if tag and client.focus then client.focus:move_to_tag(tag) end;
+		end)
+	});
+end
+
+-- CLIENT KEYBINDS/BUTTONS
+client.connect_signal("request::default_keybindings", function()
+        awful.keyboard.append_client_keybindings({
+                awful.key({ modkey }, "q", function(c) c:kill() end),
+                awful.key({ modkey }, "o", function(c) c:move_to_screen() end),
+                awful.key({ modkey }, "m", function(c)
+                        c.maximized = not c.maximized
+                        c:raise()
+                end),
+
+        });
+end);
+
+client.connect_signal("request::default_mousebindings", function()
+	awful.mouse.append_client_mousebindings({
+		-- awful.button({}, 1, function(c)
+		-- 	if root.elements.hub then root.elements.hub.close() end
+		-- 	c:active { context = 'mouse_click', raise = true }
+		-- end),
+		awful.button({ modkey }, 1, function(c)
+			c.floating = true;
+			c:active { context = 'mouse_click', action = "mouse_move" }
+		end),
+		awful.button({ modkey }, 3, function(c)
+			c:active { context = 'mouse_click', action = "mouse_resize" }
+		end),
+	});
+	
+end);
+
+-- RULES
+ruled.client.connect_signal("request::rules", function()
+        ruled.client.append_rule {
+                id = 'global',
+                rule = { },
+                properties = {
+                        raise = true,
+                        switch_to_tags = true,
+                        size_hints_honor = false,
+                        screen = awful.screen.preferred,
+                        focus = awful.client.focus.filter,
+                        placement = awful.placement.no_overlap+awful.placement.no_offscreen,
+                }
+        }
+end);
+
+-- NOTIFICATIONS
+ruled.notification.connect_signal("request::rules", function()
+        ruled.notification.append_rule {
+                rule = {},
+                properties = { timeout = 0 }
+        }
+end);
+
+-- SPAWNS
+awful.spawn.with_shell("$HOME/.config/awesome/scripts/screen.sh");
+awful.spawn.with_shell("$HOME/.config/awesome/scripts/wallpaper.sh");
+-- awful.spawn.with_shell("$HOME/.config/awesome/scripts/compositor.sh");
+
+-- ELEMENTS
+if not root.elements.topbar then require('elements.topbar')() end;
+if not root.elements.tagswitcher then require('elements.tagswitch')() end;
+
+os.execute('sleep 0.1');
+if root.elements.topbar then root.elements.topbar.show() end;
+
+
+
+
+
+
