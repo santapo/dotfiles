@@ -32,9 +32,9 @@ end);
 -- TAGS/LAYOUTS
 screen.connect_signal('request::desktop_decoration', function(s)
         if s.index == 1 then
-            awful.tag({1,2,3}, s, awful.layout.layouts[1]);
+            awful.tag({1,2,3,4}, s, awful.layout.layouts[1]);
         else
-            awful.tag({4,5,6}, s, awful.layout.layouts[1]);
+            awful.tag({5,6,7,8,9}, s, awful.layout.layouts[1]);
         end
         s.tags[1]:view_only();
 end);
