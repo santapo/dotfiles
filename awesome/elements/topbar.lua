@@ -50,19 +50,47 @@ function make_launcher(s)
     root.elements.launcher[s.index] = launcher;
 end
 
+function make_date(s)
+    local date = wibox({
+        screen = s,
+        type = "dock",
+        visible = false,
+        bg = config.colors.t,
+        height = config.topbar.h,
+        width = config.topbar.dw
+    });
 
+    date:setup {
+        layout = wibox.container.place,
+        valign = "center",
+        {
+            widget = wibox.widget.textclock,
+            font = config.fonts.tlb;
+            refresh = 60,
+            format = config.icons.date..' %a, %b %-d    <span font="'..config.fonts.tll..'">'..config.icons.time..' %-I:%M %p</span>';
+        },
+    };
+
+    date.x = ((s.workarea.width - (config.topbar.w + (config.global.m*2))) + s.workarea.x) - config.topbar.dw;
+    date.y = config.global.m
+    
+    root.elements.date = root.elements.date or {};
+    root.elements.date[s.index] = date;
+end
 
 return function()
     awful.screen.connect_for_each_screen(function(screen)
         if not root.elements.launcher or not root.elements.launcher[screen.index] then make_launcher(screen) end;
+        if not root.elements.date or not root.elements.date[screen.index] then make_date(screen) end;
     end);
 
     root.elements.topbar = {
         show = function()
             for i in pairs(root.elements.launcher) do root.elements.launcher[i].visible = true end;
+            for i in pairs(root.elements.date) do root.elements.date[i].visible = true end;
         end,
         hide = function()
-            for i in pairs(root.elements.launcher) do root.elements.launcher[i].visible = false end;
+            for i in pairs(root.elements.date) do root.elements.date[i].visible = false end;
         end
     }
 end
