@@ -72,24 +72,66 @@ function make_date(s)
     };
 
     date.x = ((s.workarea.width - (config.topbar.w + (config.global.m*2))) + s.workarea.x) - config.topbar.dw;
-    date.y = config.global.m
+    date.y = config.global.m;
     
     root.elements.date = root.elements.date or {};
     root.elements.date[s.index] = date;
 end
 
+function make_taglist(s)
+    local taglist = wibox({
+        screen = s,
+        visible = false,
+        type = "utility",
+        bg = config.colors.f,
+        fg = config.colors.xf,
+        width = config.topbar.w,
+        height = config.topbar.h
+    });
+
+    taglist:struts({ top = config.topbar.h + config.global.m });
+    taglist.x = s.workarea.x + (config.topbar.w + (config.global.m*2));
+    taglist.y = config.global.m;
+
+    local tags = awful.widget.taglist({
+        screen = s,
+        filter = awful.widget.taglist.filter.selected,
+        widget_template = {
+            layout = wibox.container.margin,
+            {
+                id = "text_role",
+                widget = wibox.widget.textbox,
+                font = config.fonts.tmb,
+            }
+        }
+    });
+
+    taglist:setup {
+        layout = wibox.container.place,
+        valign = "center",
+        tags
+    }
+
+    root.elements.taglist = root.elements.taglist or {};
+    root.elements.taglist[s.index] = taglist;
+end
+
 return function()
     awful.screen.connect_for_each_screen(function(screen)
         if not root.elements.launcher or not root.elements.launcher[screen.index] then make_launcher(screen) end;
+        if not root.elements.taglist or not root.elements.taglist[screen.index] then make_taglist(screen) end;
         if not root.elements.date or not root.elements.date[screen.index] then make_date(screen) end;
     end);
 
     root.elements.topbar = {
         show = function()
             for i in pairs(root.elements.launcher) do root.elements.launcher[i].visible = true end;
+            for i in pairs(root.elements.taglist) do root.elements.taglist[i].visible = true end;
             for i in pairs(root.elements.date) do root.elements.date[i].visible = true end;
         end,
         hide = function()
+            for i in pairs(root.elements.launcher) do root.elements.launcher[i].visible = false end;
+            for i in pairs(root.elements.taglist) do root.elements.taglist[i].visible = false end;
             for i in pairs(root.elements.date) do root.elements.date[i].visible = false end;
         end
     }
