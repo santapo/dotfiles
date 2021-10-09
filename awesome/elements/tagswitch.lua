@@ -133,7 +133,7 @@ return function()
             {{ 'Mod4', 'Shift' }, 'Tab', function() awful.tag.viewprev(awful.screen.focused()) end}
         },
         stop_key = 'Mod4',
-        stop_even = 'release',
+        stop_event = 'release',
         export_keybindings = true,
         start_callback = toggle_tag_switcher,
         stop_callback = toggle_tag_switcher
