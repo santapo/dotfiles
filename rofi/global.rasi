@@ -7,7 +7,6 @@ configuration {
 @import "theme.rasi"
 
 window {
-  padding: 40%;
   background-color: #33353866;
 }
 
