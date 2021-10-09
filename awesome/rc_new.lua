@@ -41,6 +41,15 @@ end);
 -- GLOBAL KEYBINDS/BUTTONS
 awful.keyboard.append_global_keybindings({
         awful.key({ modkey }, "Return", function() awful.spawn(config.commands.terminal) end),
+        awful.key({ modkey }, "r", function() awful.spawn(config.commands.rofi) end),
+
+        awful.key({ modkey }, "space", function() awful.layout.inc(1) end),
+
+        -- Resize
+	awful.key({ modkey }, "]", function() awful.tag.incmwfact(0.05) end),
+	awful.key({ modkey }, "[", function() awful.tag.incmwfact(-0.05) end), 
+	awful.key({ modkey, "Shift" }, "]", function() awful.tag.incmwfact(0.01) end),
+	awful.key({ modkey, "Shift" }, "[", function() awful.tag.incmwfact(-0.01) end)
 });
 
 -- TAG KEYBINDS
@@ -64,10 +73,16 @@ end
 client.connect_signal("request::default_keybindings", function()
         awful.keyboard.append_client_keybindings({
                 awful.key({ modkey }, "q", function(c) c:kill() end),
+                awful.key({ modkey }, "o", function(c) c:move_to_screen() end),
+                awful.key({ modkey }, "m", function(c)
+                        c.maximized = not c.maximized
+                        c:raise()
+                end),
+
         });
 end);
 
-client.connect_signal("request::default_mousebindings", function(c)
+client.connect_signal("request::default_mousebindings", function()
 	awful.mouse.append_client_mousebindings({
 		-- awful.button({}, 1, function(c)
 		-- 	if root.elements.hub then root.elements.hub.close() end
