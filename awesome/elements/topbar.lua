@@ -269,14 +269,97 @@ function make_utilities(s)
     root.elements.utilities[s.index] = utilities;
 end
 
+-- function make_systray(s)
+--     local systray = wibox({
+--         screen = s,
+--         type = "dock",
+--         visible = false,
+--         bg = config.colors.f,
+--         height = config.topbar.h,
+--         width = config.topbar.sw,
+--         shape = rounded(),
+--     });
+--     systray:setup {
+--         layout = wibox.container.place,
+--         -- valign = "center",
+--         -- halign = "right",
+--         opacity = 0,
+--         {
+--             widget = wibox.widget.systray,
+--             base_size = 25,
+--             opacity = 0,
+--         },
+--     };
+
+--     power_width = config.topbar.w + config.global.m*2;
+--     date_width = config.topbar.dw + config.global.m*2;
+--     systray.x = (s.workarea.width - power_width - date_width + s.workarea.x) - config.topbar.sw;
+--     systray.y = config.global.m;
+    
+--     root.elements.systray = root.elements.systray or {};
+--     root.elements.systray[s.index] = systray;
+-- end
+
+-- function make_tasklist(s)
+--     local tasklist = wibox({
+--         screen = s,
+--         visible = false,
+--         type = "utility",
+--         bg = config.colors.f,
+--         fg = config.colors.xf,
+--         width = config.topbar.sw,
+--         height = config.topbar.h,
+--         shape = rounded()
+--     });
+
+--     tasklist:struts({ top = config.topbar.h + config.global.m });
+--     launcher_width = config.topbar.w + config.global.m*2;
+--     taglist_width = config.topbar.w + config.global.m;
+--     tasklist.x = s.workarea.x + launcher_width + taglist_width;
+--     tasklist.y = config.global.m;
+--     -- tasklist.x = 400
+
+--     local task = awful.widget.tasklist({
+--         screen = s,
+--         filter = awful.widget.tasklist.filter.currenttags,
+--         widget_template = {
+--             {
+--                 wibox.widget.base.make_widget(),
+--                 forced_height = 5,
+--                 id            = "background_role",
+--                 widget        = wibox.container.background,
+--             },
+--             {
+--                 awful.widget.clienticon,
+--                 margins = 5,
+--                 widget  = wibox.container.margin,
+--                 forced_width = 25,
+--                 forced_height = 25
+--             },
+--             layout = wibox.layout.align.vertical,
+--         }
+--     });
+
+--     tasklist:setup {
+--         layout = wibox.container.place,
+--         valign = "center",
+--         task
+--     }
+
+--     root.elements.tasklist = root.elements.tasklist or {};
+--     root.elements.tasklist[s.index] = tasklist;
+-- end
+
 return function()
     awful.screen.connect_for_each_screen(function(screen)
         if not root.elements.launcher or not root.elements.launcher[screen.index] then make_launcher(screen) end;
         if not root.elements.taglist or not root.elements.taglist[screen.index] then make_taglist(screen) end;
         if not root.elements.date or not root.elements.date[screen.index] then make_date(screen) end;
         if not root.elements.power or not root.elements.power[screen.index] then make_power(screen) end;
+        -- if not root.elements.tasklist or not root.elements.tasklist[screen.index] then make_tasklist(screen) end;
         if screen.index == 1 then
             if not root.elements.utilities or not root.elements.utilities[screen.index] then make_utilities(screen) end;
+            -- if not root.elements.systray or not root.elements.systray[screen.index] then make_systray(screen) end;
         end;
     end);
 
@@ -287,13 +370,16 @@ return function()
             for i in pairs(root.elements.date) do root.elements.date[i].visible = true end;
             for i in pairs(root.elements.power) do root.elements.power[i].visible = true end;
             for i in pairs(root.elements.utilities) do root.elements.utilities[i].visible = true end;
+            -- for i in pairs(root.elements.systray) do root.elements.systray[i].visible = true end;
+            -- for i in pairs(root.elements.tasklist) do root.elements.tasklist[i].visible = true end;
         end,
         hide = function()
             for i in pairs(root.elements.launcher) do root.elements.launcher[i].visible = false end;
             for i in pairs(root.elements.taglist) do root.elements.taglist[i].visible = false end;
             for i in pairs(root.elements.date) do root.elements.date[i].visible = false end;
             for i in pairs(root.elements.power) do root.elements.power[i].visible = false end;
-            for i in pairs(root.elements.utilities) do root.elements.utilities[i].visible = false end;
+            -- for i in pairs(root.elements.systray) do root.elements.systray[i].visible = false end;
+            -- for i in pairs(root.elements.tasklist) do root.elements.tasklist[i].visible = false end;
         end
     }
 end
