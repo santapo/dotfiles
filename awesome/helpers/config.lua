@@ -76,6 +76,7 @@ local config = {
         h = 30,
         w = 30,
         dw = 200,
+        sw = 200,
         utilities = {
             wifi = true,
             bt = true,
@@ -84,7 +85,7 @@ local config = {
             bat = true,
             pac = true,
             mem = true,
-            note = true,
+            note = false,
         },
     },
     tagswitcher= {

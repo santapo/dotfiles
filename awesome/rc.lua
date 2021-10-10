@@ -10,12 +10,13 @@ require('awful.autofocus');
 require('./errors')();
 
 
-
 -- ELEMENT STORE
 root.elements = root.elements or {};
 
 -- THEME
 beautiful.useless_gap = 5;
+-- beautiful.bg_systray = ;
+beautiful.systray_icon_spacing = 5;
 
 -- MODKEY
 modkey = 'Mod4';
@@ -46,7 +47,7 @@ awful.keyboard.append_global_keybindings({
 
         awful.key({ modkey }, "space", function() awful.layout.inc(1) end),
 
-        awful.key({ modkey, "Shift" }, "q", function() awesome.quit() end),
+        awful.key({ modkey, "Shift" }, "Escape", function() awesome.quit() end),
         awful.key({ modkey, "Shift" }, "r", function() awesome.restart() end),
 
         -- Resize
@@ -76,8 +77,10 @@ end
 -- CLIENT KEYBINDS/BUTTONS
 client.connect_signal("request::default_keybindings", function()
         awful.keyboard.append_client_keybindings({
-                awful.key({ modkey }, "q", function(c) c:kill() end),
+                awful.key({ modkey }, "w", function(c) c:kill() end),
                 awful.key({ modkey }, "o", function(c) c:move_to_screen() end),
+                awful.key({ modkey }, "Tab", function(c) awful.client.focus.byidx(1) end),
+                awful.key({ modkey, "Shift" }, "Tab", function(c) awful.client.focus.byidx(-1) end),
                 awful.key({ modkey }, "m", function(c)
                         c.maximized = not c.maximized
                         c:raise()
@@ -147,7 +150,7 @@ client.connect_signal("manage", function (c)
             -- Prevent clients from being unreachable after screen count changes.
             awful.placement.no_offscreen(c)
         end
-        c.shape = gears.shape.rounded_rect
+        -- c.shape = gears.shape.rounded_rect
         awful.titlebar.hide(c)
 end)
 client.connect_signal("mouse::enter", function(c)

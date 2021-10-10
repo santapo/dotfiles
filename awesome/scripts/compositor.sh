@@ -6,4 +6,4 @@ killall -q picom
 # Wait until the processes have been shut down
 while pgrep -u $UID -x picom >/dev/null; do sleep 1; done
 
-picom --experimental-backends --config $HOME/.config/picom/conf
+picom --experimental-backends -b --config $HOME/.config/picom/picom.conf

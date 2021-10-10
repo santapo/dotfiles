@@ -131,10 +131,10 @@ return function()
 
     awful.keygrabber {
         keybindings = {
-            {{ 'Mod4' }, 'Tab', function() awful.tag.viewnext(awful.screen.focused()) end},
-            {{ 'Mod4', 'Shift' }, 'Tab', function() awful.tag.viewprev(awful.screen.focused()) end}
+            {{ 'Mod1' }, 'Tab', function() awful.tag.viewnext(awful.screen.focused()) end},
+            {{ 'Mod1', 'Shift' }, 'Tab', function() awful.tag.viewprev(awful.screen.focused()) end}
         },
-        stop_key = 'Mod4',
+        stop_key = 'Mod1',
         stop_event = 'release',
         export_keybindings = true,
         start_callback = toggle_tag_switcher,
