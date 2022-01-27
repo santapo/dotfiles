@@ -147,12 +147,13 @@ end);
 awful.spawn.with_shell("$HOME/.config/awesome/scripts/screen.sh");
 awful.spawn.with_shell("$HOME/.config/awesome/scripts/wallpaper.sh");
 awful.spawn.with_shell("$HOME/.config/awesome/scripts/compositor.sh");
+awful.spawn.with_shell("$HOME/.config/polybar/launch.sh");
 -- awful.spawn.with_shell("$HOME/.config/awesome/scripts/autolock.sh");
 awful.spawn.with_shell("ibus-daemon -drx")
 
 -- ELEMENTS
-if not root.elements.topbar then require('elements.topbar')() end;
-if not root.elements.tagswitcher then require('elements.tagswitch')() end;
+-- if not root.elements.topbar then require('elements.topbar')() end;
+-- if not root.elements.tagswitcher then require('elements.tagswitch')() end;
 
 -- SIGNALS
 client.connect_signal("manage", function (c)
@@ -173,7 +174,7 @@ client.connect_signal("mouse::enter", function(c)
 end);
 
 os.execute('sleep 0.1');
-if root.elements.topbar then root.elements.topbar.show() end;
+-- if root.elements.topbar then root.elements.topbar.show() end;
 
 
 
