@@ -113,12 +113,9 @@ export EDITOR=nvim
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 export PYTHONPATH=.
 
-# ibus bamboo
-export GTK_IM_MODULE=ibus
-export XMODIFIERS=@im=ibus
-export QT_IM_MODULE=ibus
-export QT4_IM_MODULE=ibus
-export CLUTTER_IM_MODULE=ibus
+alias tlmgr='/usr/share/texmf-dist/scripts/texlive/tlmgr.pl --usermode'
+alias vim=nvim
+
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!

@@ -15,7 +15,7 @@ root.elements = root.elements or {};
 
 -- THEME
 beautiful.useless_gap = 5;
--- beautiful.bg_systray = ;
+beautiful.bg_systray = config.colors.f;
 beautiful.systray_icon_spacing = 5;
 
 -- MODKEY
@@ -54,7 +54,18 @@ awful.keyboard.append_global_keybindings({
 	awful.key({ modkey }, "]", function() awful.tag.incmwfact(0.05) end),
 	awful.key({ modkey }, "[", function() awful.tag.incmwfact(-0.05) end),
 	awful.key({ modkey, "Shift" }, "]", function() awful.tag.incmwfact(0.01) end),
-	awful.key({ modkey, "Shift" }, "[", function() awful.tag.incmwfact(-0.01) end)
+	awful.key({ modkey, "Shift" }, "[", function() awful.tag.incmwfact(-0.01) end),
+        awful.key({}, "Print", function()
+                awful.util.spawn_with_shell('maim -s -o | xclip -selection clipboard -t image/png')
+        end),
+        awful.key({ modkey, "Control" }, "n", function ()
+                local c = awful.client.restore()
+                -- Focus restored client
+                if c then
+                        client.focus = c
+                c:raise()
+                end
+        end),
 });
 
 -- TAG KEYBINDS
@@ -77,7 +88,7 @@ end
 -- CLIENT KEYBINDS/BUTTONS
 client.connect_signal("request::default_keybindings", function()
         awful.keyboard.append_client_keybindings({
-                awful.key({ modkey }, "w", function(c) c:kill() end),
+                awful.key({ modkey }, "q", function(c) c:kill() end),
                 awful.key({ modkey }, "o", function(c) c:move_to_screen() end),
                 awful.key({ modkey }, "Tab", function(c) awful.client.focus.byidx(1) end),
                 awful.key({ modkey, "Shift" }, "Tab", function(c) awful.client.focus.byidx(-1) end),
@@ -85,7 +96,9 @@ client.connect_signal("request::default_keybindings", function()
                         c.maximized = not c.maximized
                         c:raise()
                 end),
-
+                awful.key({ modkey }, "n", function (c)
+                        c.minimized = true
+                end),
         });
 end);
 
@@ -134,6 +147,8 @@ end);
 awful.spawn.with_shell("$HOME/.config/awesome/scripts/screen.sh");
 awful.spawn.with_shell("$HOME/.config/awesome/scripts/wallpaper.sh");
 awful.spawn.with_shell("$HOME/.config/awesome/scripts/compositor.sh");
+-- awful.spawn.with_shell("$HOME/.config/awesome/scripts/autolock.sh");
+awful.spawn.with_shell("ibus-daemon -drx")
 
 -- ELEMENTS
 if not root.elements.topbar then require('elements.topbar')() end;
