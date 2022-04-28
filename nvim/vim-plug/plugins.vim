@@ -5,5 +5,6 @@ call plug#begin(stdpath('data') . '/plugged')
     Plug 'scrooloose/NERDTree'
     " Auto pairs for '(' '[' '{'
     Plug 'jiangmiao/auto-pairs'
-
+    Plug 'morhetz/gruvbox'
+    Plug 'projekt0n/github-nvim-theme'
 call plug#end()
